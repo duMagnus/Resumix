@@ -1,53 +1,32 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { Navigation } from "./src/infrastructure/navigation";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
-import { RecordScreen } from "./src/features/record/screens/record.screen";
+import { StatusBar } from "react-native";
+import { useFonts } from "expo-font";
+import { initializeApp } from "firebase/app";
 
-const TAB_ICON = {
-  Record: ["md-mic", "md-mic-outline"],
-  History: ["md-list", "md-list-outline"],
+const firebaseConfig = {
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: "resumix-3cad4.firebaseapp.com",
+  projectId: "resumix-3cad4",
+  storageBucket: "resumix-3cad4.appspot.com",
+  messagingSenderId: "117875097630",
+  appId: "1:117875097630:web:d80d9341fa461c6e22ae0f",
 };
 
-function HistoryScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-const createScreenOptions = ({ route }) => {
-  return {
-    tabBarIcon: ({ size, color, focused }) => {
-      const iconName = TAB_ICON[route.name][focused ? 0 : 1];
-      return <Ionicons name={iconName} size={40} color={color} />;
-    },
-    tabBarStyle: { height: 60, backgroundColor: "#E0E1DD", border: "none" },
-    tabBarShowLabel: false,
-    headerShown: false,
-    tabBarActiveTintColor: "#1B263B",
-    tabBarInactiveTintColor: "#778DA9",
-  };
-};
-
-const Tab = createBottomTabNavigator();
+initializeApp(firebaseConfig);
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "AROneSans-Bold": require("./assets/fonts/AROneSans-Bold.ttf"),
+    "AROneSans-Medium": require("./assets/fonts/AROneSans-Medium.ttf"),
+    "AROneSans-Regular": require("./assets/fonts/AROneSans-Regular.ttf"),
+    "AROneSans-SemiBold": require("./assets/fonts/AROneSans-SemiBold.ttf"),
+  });
+
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Tab.Navigator screenOptions={createScreenOptions}>
-          <Tab.Screen name="Record" component={RecordScreen} />
-          <Tab.Screen name="History" component={HistoryScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <Navigation />
     </>
   );
 }
-
-const styles = StyleSheet.create({});

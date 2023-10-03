@@ -1,83 +1,53 @@
-import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, TouchableOpacity, StyleSheet } from "react-native";
 import {
-  getPermission,
-  startRecording,
-  stopRecording,
-} from "../../../services/record/record.service";
+  Animated,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native";
 
-export const AnimatedRecordButton = () => {
+export const AnimatedRecordButton = ({ record, isLoading }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [clicked, setClicked] = useState(false);
   const micTransitionDuration = 600;
-  const [iconName, setIconName] = useState("mic");
 
-  const [recordingStatus, setRecordingStatus] = useState("idle");
-  const [recording, setRecording] = useState(null);
-  const [audioPermission, setAudioPermission] = useState(null);
-  const [recordingUri, setRecordingUri] = useState(null);
-
-  const getAction = async () => {
-    if (!audioPermission) {
-      setAudioPermission(getPermission());
-    }
-
-    gravar();
-
-    if (recording) {
-      const { recording, recordingStatus, audioUri } = await stopRecording(
-        recording,
-        recordingStatus
-      );
-      if (audioUri) {
-        console.log("Saved audio file to", savedUri);
-      }
-    } else {
-      const { recording, recordingStatus } = await startRecording(
-        audioPermission
-      );
-      setRecording(recording);
-      setRecordingStatus(recordingStatus);
-    }
-  };
-
-  gravar = async () => {
+  useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: clicked ? -280 : 0,
       duration: micTransitionDuration,
       useNativeDriver: true,
     }).start();
-    setTimeout(
-      () => setIconName(clicked ? "pause" : "mic"),
-      micTransitionDuration - 100
-    );
-  };
+  }, [clicked]);
 
   return (
     <Animated.View
       style={{
         transform: [{ translateY: fadeAnim }],
         position: "absolute",
-        bottom: 100,
+        bottom: 130,
       }}
     >
       <TouchableOpacity
-        style={[
-          styles.recordButton,
-          { backgroundColor: clicked ? "#f25757" : "gray" },
-        ]}
+        style={styles.recordButton}
         onPress={async () => {
+          await record();
           setClicked(!clicked);
-          await getAction();
         }}
+        disabled={isLoading}
       >
-        <Ionicons
-          name={iconName}
-          size={60}
-          color={"white"}
-          style={styles.micIcon}
-        />
+        {isLoading ? (
+          <ActivityIndicator animating={true} color={"#FFF"} size={50} />
+        ) : (
+          <View
+            style={{
+              backgroundColor: "white",
+              width: 30,
+              height: 30,
+              borderRadius: clicked ? 2 : 15,
+            }}
+          />
+        )}
       </TouchableOpacity>
     </Animated.View>
   );
@@ -85,11 +55,12 @@ export const AnimatedRecordButton = () => {
 
 const styles = StyleSheet.create({
   recordButton: {
-    height: 180,
-    width: 180,
-    borderRadius: 90,
+    height: 150,
+    width: 150,
+    borderRadius: 75,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#f25757",
   },
   micIcon: {},
 });
