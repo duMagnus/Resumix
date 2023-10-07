@@ -15,6 +15,7 @@ export const HistoryNavigator = () => {
         ...TransitionPresets.ModalPresentationIOS,
         headerShown: false,
       }}
+      initialRouteName="HistoryList"
     >
       <HistoryStack.Screen name="HistoryList" component={HistoryScreen} />
       <HistoryStack.Screen name="SummaryDetail" component={SummaryDetail} />

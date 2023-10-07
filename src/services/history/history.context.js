@@ -6,8 +6,10 @@ export const HistoryContextProvider = ({ children }) => {
   const [history, setHistory] = useState([]);
 
   const add = (item) => {
-    console.log("adding...", item);
-    setHistory([...history, item]);
+    if (!history.length) {
+      setHistory([item]);
+    }
+    setHistory([item, ...history]);
   };
 
   return (
