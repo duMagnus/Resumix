@@ -9,9 +9,11 @@ import {
 import { BackgroundContainer } from "../components/record.styles";
 import { HistoryContext } from "../../../services/history/history.context";
 import { BackgroundView } from "../../../infrastructure/navigation/index.styles";
+import { RecordContext } from "../../../services/record/record.context";
 
 export const RecordScreen = ({ navigation }) => {
   const { addToHistory, loadHistory } = useContext(HistoryContext);
+  const { toggleRecording } = useContext(RecordContext);
   const [recordingObject, setRecordingObject] = useState(null);
   const [audioPermission, setAudioPermission] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +23,7 @@ export const RecordScreen = ({ navigation }) => {
   }, []);
 
   const record = async () => {
+    toggleRecording();
     if (!audioPermission) {
       setAudioPermission(getPermission());
     }
