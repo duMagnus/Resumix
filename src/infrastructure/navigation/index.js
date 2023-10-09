@@ -3,16 +3,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { RecordScreen } from "../../features/record/screens/record.screen";
-import { Settings, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { HistoryNavigator } from "./history.navigator";
 import { HistoryContextProvider } from "../../services/history/history.context";
-import { SettingsScreen } from "../../features/settings/screens/settings.screen";
-import { SettingsNavigator } from "./settings.navigator";
 
 const TAB_ICON = {
   Record: ["md-mic", "md-mic-outline"],
   History: ["md-list", "md-list-outline"],
-  Settings: ["md-settings", "md-settings-outline"],
 };
 
 const createScreenOptions = ({ route }) => {
@@ -38,7 +35,6 @@ export const Navigation = () => {
         <Tab.Navigator screenOptions={createScreenOptions}>
           <Tab.Screen name="Record" component={RecordScreen} />
           <Tab.Screen name="History" component={HistoryNavigator} />
-          <Tab.Screen name="Settings" component={SettingsNavigator} />
         </Tab.Navigator>
       </HistoryContextProvider>
     </NavigationContainer>

@@ -1,8 +1,6 @@
 import styled from "styled-components/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Animated, FlatList, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Modal } from "react-native-paper";
+import { Animated, TouchableOpacity } from "react-native";
 
 export const SummaryCardContainer = styled.View`
   background-color: #11151c;

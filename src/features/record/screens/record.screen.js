@@ -25,19 +25,23 @@ export const RecordScreen = ({ navigation }) => {
       setAudioPermission(getPermission());
     }
     if (recordingObject) {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      const audioUri = await stopRecording(recordingObject);
-      setRecordingObject(null);
-      const summaryItem = await sendAudioToCloudFunction(audioUri);
-      addToHistory(summaryItem);
+        const audioUri = await stopRecording(recordingObject);
+        setRecordingObject(null);
+        const summaryItem = await sendAudioToCloudFunction(audioUri);
+        addToHistory(summaryItem);
 
-      setIsLoading(false);
+        setIsLoading(false);
 
-      navigation.navigate("History", {
-        screen: "HistoryList",
-        params: { summary: summaryItem },
-      });
+        navigation.navigate("History", {
+          screen: "HistoryList",
+          params: { summary: summaryItem },
+        });
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       const newRecording = await startRecording(audioPermission);
       setRecordingObject(newRecording);
