@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AnimatedRecordButton } from "../components/animated-record-button.component";
 import { sendAudioToCloudFunction } from "../../../services/transcribe/transcribe.service";
 import {
@@ -7,14 +7,18 @@ import {
   stopRecording,
 } from "../../../services/record/record.service";
 import { BackgroundContainer } from "../components/record.styles";
-import { LinearGradient } from "expo-linear-gradient";
 import { HistoryContext } from "../../../services/history/history.context";
+import { BackgroundView } from "../../../infrastructure/navigation/index.styles";
 
 export const RecordScreen = ({ navigation }) => {
-  const { addToHistory } = useContext(HistoryContext);
+  const { addToHistory, loadHistory } = useContext(HistoryContext);
   const [recordingObject, setRecordingObject] = useState(null);
   const [audioPermission, setAudioPermission] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    loadHistory();
+  }, []);
 
   const record = async () => {
     if (!audioPermission) {
@@ -41,15 +45,10 @@ export const RecordScreen = ({ navigation }) => {
   };
 
   return (
-    <LinearGradient
-      colors={["#212D40", "#11151c"]}
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <BackgroundView>
       <BackgroundContainer>
         <AnimatedRecordButton record={record} isLoading={isLoading} />
       </BackgroundContainer>
-    </LinearGradient>
+    </BackgroundView>
   );
 };

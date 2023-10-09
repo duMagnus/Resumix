@@ -3,20 +3,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { RecordScreen } from "../../features/record/screens/record.screen";
-import { StyleSheet } from "react-native";
+import { Settings, StyleSheet } from "react-native";
 import { HistoryNavigator } from "./history.navigator";
 import { HistoryContextProvider } from "../../services/history/history.context";
+import { SettingsScreen } from "../../features/settings/screens/settings.screen";
 
 const TAB_ICON = {
   Record: ["md-mic", "md-mic-outline"],
   History: ["md-list", "md-list-outline"],
+  Settings: ["md-settings", "md-settings-outline"],
 };
 
 const createScreenOptions = ({ route }) => {
   return {
-    tabBarIcon: ({ size, color, focused }) => {
+    tabBarIcon: ({ color, focused }) => {
       const iconName = TAB_ICON[route.name][focused ? 0 : 1];
-      return <Ionicons name={iconName} size={35} color={color} />;
+      return <Ionicons name={iconName} size={30} color={color} />;
     },
     tabBarStyle: styles.bottomTab,
     tabBarShowLabel: false,
@@ -35,6 +37,7 @@ export const Navigation = () => {
         <Tab.Navigator screenOptions={createScreenOptions}>
           <Tab.Screen name="Record" component={RecordScreen} />
           <Tab.Screen name="History" component={HistoryNavigator} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </HistoryContextProvider>
     </NavigationContainer>

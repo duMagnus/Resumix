@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native";
+import { Animated, FlatList, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Modal } from "react-native-paper";
 
 export const SummaryCardContainer = styled.View`
   background-color: #11151c;
@@ -17,15 +19,25 @@ export const CardTitle = styled.Text`
   margin: 30px 30px 12px 30px;
 `;
 
-export const CardSummary = styled.Text`
+export const CardSummary = styled.Text.attrs({
+  numberOfLines: 6,
+})`
   color: white;
   font-family: AROneSans-Medium;
   margin: 0 30px 30px 30px;
 `;
 
-export const LinearGradientOver = styled(LinearGradient)`
+export const LinearGradientOver = styled(LinearGradient).attrs({
+  colors: ["transparent", "#11151c"],
+  start: { x: 0, y: 0.4 },
+  end: { x: 0, y: 0.95 },
+})`
   height: 100%;
   width: 100%;
+  flex: 1;
+  position: absolute;
+  z-index: 99;
+  border-radius: 15px;
 `;
 
 export const SummaryDetailScrollingContainer = styled.ScrollView`
@@ -63,4 +75,48 @@ export const TranscriptionButtonLabel = styled.Text`
   color: white;
   font-family: AROneSans-Bold;
   font-size: 12px;
+`;
+
+export const CardTopBar = styled.View`
+  margin-right: 20px;
+  margin-left: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
+  background-color: gray;
+`;
+
+export const CardIconContainer = styled(TouchableOpacity)`
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+  background-color: #212d40;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 99;
+  right: ${12 + 15}px;
+  top: ${6 + 15}px;
+`;
+
+export const CardOptionsIconContainer = styled(CardIconContainer)``;
+
+export const NoHistoryContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+`;
+
+export const NoHistoryMessage = styled.Text`
+  color: white;
+  font-family: AROneSans-Bold;
+  font-size: 16px;
+  text-align: center;
+`;
+
+export const AnimatedOptionsContainer = styled(Animated.View)`
+  position: absolute;
+  right: 0;
+  z-index: 98;
 `;
