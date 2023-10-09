@@ -9,25 +9,30 @@ import { BackgroundView } from "../../../infrastructure/navigation/index.styles"
 import { CardTitle } from "../../history/components/history.styles";
 import { Avatar, List } from "react-native-paper";
 import {
+  LogInButton,
   OptionDescription,
   OptionTitle,
   ProfileContainer,
   ProfileEmail,
   ProfileName,
   ProfilePicture,
+  RegisterButton,
   SettingsContainer,
   SettingsOptionContainer,
+  SignInButton,
 } from "./settings.styles";
+import { useContext } from "react";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 export const SettingsScreen = ({ navigation }) => {
   const settingsMenu = [
-    {
-      title: "Conta",
-      target: () => {
-        navigation.navigate("History");
-      },
-      description: "Detalhes da sua conta",
-    },
+    // {
+    //   title: "Conta",
+    //   target: () => {
+    //     navigation.navigate("History");
+    //   },
+    //   description: "Detalhes da sua conta",
+    // },
     {
       title: "Sair",
       target: () => {
@@ -37,14 +42,29 @@ export const SettingsScreen = ({ navigation }) => {
       description: "Sair da sua conta",
     },
   ];
+
+  const { user } = useContext(AuthenticationContext);
+
+  const handleAccountPress = () => {
+    if (user) {
+      navigation.navigate("AccountSettings");
+    } else {
+      navigation.navigate("AccountManager");
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BackgroundView>
         <SettingsContainer>
-          <ProfileContainer>
+          <ProfileContainer onPress={handleAccountPress}>
             <View>
-              <ProfileName>Fernanda Lauer Perazzoni</ProfileName>
-              <ProfileEmail>fernandalperazzoni@gmail.com</ProfileEmail>
+              <ProfileName>
+                {user ? user.name : "Faça login ou registre-se"}
+              </ProfileName>
+              <ProfileEmail>
+                {user ? user.email : "para fazer algo"}
+              </ProfileEmail>
             </View>
             <ProfilePicture />
           </ProfileContainer>

@@ -6,7 +6,7 @@ export const SettingsContainer = styled.View`
   padding: 20px 12px;
 `;
 
-export const ProfileContainer = styled.View`
+export const ProfileContainer = styled(TouchableOpacity)`
   background-color: #313c51;
   height: 100px;
   border-radius: 50px;

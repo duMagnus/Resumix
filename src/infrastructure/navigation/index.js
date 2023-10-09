@@ -7,6 +7,7 @@ import { Settings, StyleSheet } from "react-native";
 import { HistoryNavigator } from "./history.navigator";
 import { HistoryContextProvider } from "../../services/history/history.context";
 import { SettingsScreen } from "../../features/settings/screens/settings.screen";
+import { SettingsNavigator } from "./settings.navigator";
 
 const TAB_ICON = {
   Record: ["md-mic", "md-mic-outline"],
@@ -37,7 +38,7 @@ export const Navigation = () => {
         <Tab.Navigator screenOptions={createScreenOptions}>
           <Tab.Screen name="Record" component={RecordScreen} />
           <Tab.Screen name="History" component={HistoryNavigator} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="Settings" component={SettingsNavigator} />
         </Tab.Navigator>
       </HistoryContextProvider>
     </NavigationContainer>
