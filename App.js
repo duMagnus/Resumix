@@ -3,18 +3,7 @@ import React from "react";
 import { Navigation } from "./src/infrastructure/navigation";
 import { StatusBar } from "react-native";
 import { useFonts } from "expo-font";
-import { initializeApp } from "firebase/app";
-
-const firebaseConfig = {
-  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
-  authDomain: "resumix-3cad4.firebaseapp.com",
-  projectId: "resumix-3cad4",
-  storageBucket: "resumix-3cad4.appspot.com",
-  messagingSenderId: "117875097630",
-  appId: "1:117875097630:web:d80d9341fa461c6e22ae0f",
-};
-
-initializeApp(firebaseConfig);
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,7 +16,9 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <Navigation />
+      <AuthenticationContextProvider>
+        <Navigation />
+      </AuthenticationContextProvider>
     </>
   );
 }

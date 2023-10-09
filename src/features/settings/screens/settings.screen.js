@@ -30,7 +30,7 @@ export const SettingsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BackgroundView>
-        <View style={{ paddingHorizontal: 12, paddingVertical: 20 }}>
+        <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
           <View
             style={{
               backgroundColor: "#313C51",
