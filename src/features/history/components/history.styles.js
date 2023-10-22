@@ -39,7 +39,6 @@ export const LinearGradientOver = styled(LinearGradient).attrs({
 `;
 
 export const SummaryDetailScrollingContainer = styled.ScrollView`
-  margin-top: 30px;
   padding: 30px;
 `;
 

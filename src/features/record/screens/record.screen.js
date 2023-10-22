@@ -20,13 +20,16 @@ export const RecordScreen = ({ navigation }) => {
 
   useEffect(() => {
     loadHistory();
+    setAudioPermission(getPermission());
   }, []);
 
   const record = async () => {
-    toggleRecording();
     if (!audioPermission) {
       setAudioPermission(getPermission());
+      return false;
     }
+
+    toggleRecording();
     if (recordingObject) {
       try {
         setIsLoading(true);
@@ -43,12 +46,14 @@ export const RecordScreen = ({ navigation }) => {
           params: { summary: summaryItem },
         });
       } catch (e) {
-        console.log(e);
+        setIsLoading(false);
+        alert(e);
       }
     } else {
       const newRecording = await startRecording(audioPermission);
       setRecordingObject(newRecording);
     }
+    return true;
   };
 
   return (

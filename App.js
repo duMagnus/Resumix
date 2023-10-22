@@ -14,9 +14,10 @@ export default function App() {
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
   });
 
+  if (!fontsLoaded) return null;
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar backgroundColor="#11151c" barStyle={"light-content"} />
       <RecordContextProvider>
         <AppTitle />
         <Navigation />

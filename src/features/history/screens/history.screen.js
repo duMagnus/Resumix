@@ -22,6 +22,7 @@ export const HistoryScreen = ({ navigation, route }) => {
       const actualSummary = history.filter((x) => x === route.params.summary);
       if (actualSummary.length) {
         navigateToHistoryDetail(route.params.summary);
+        route.params.summary = null;
       }
     }
   });

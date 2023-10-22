@@ -20,11 +20,15 @@ export const sendAudioToCloudFunction = (audioUri) => {
       }
     ).then((response) => {
       if (response.status > 200) {
-        return Promise.reject("Something went wrong. Please try again later.");
+        return Promise.reject(
+          "Algo deu errado. Por favor tente novamente mais tarde."
+        );
       }
       return response.json();
     });
-  } catch (error) {
-    console.error("Erro durante o envio do arquivo de áudio:", error);
+  } catch {
+    return Promise.reject(
+      "Erro durante o envio do arquivo de áudio. Por favor tente novamente mais tarde"
+    );
   }
 };

@@ -31,8 +31,9 @@ export const AnimatedRecordButton = ({ record, isLoading }) => {
       <TouchableOpacity
         style={styles.recordButton}
         onPress={async () => {
-          await record();
-          setClicked(!clicked);
+          if (await record()) {
+            setClicked(!clicked);
+          }
         }}
         disabled={isLoading}
       >

@@ -16,7 +16,7 @@ def transcribeAndSummarize(req: https_fn.Request) -> https_fn.Response:
 
     data = open("recording.m4a", "rb")
     transcript = openai.Audio.transcribe(
-        model="whisper-1", file=data, response_format="text", language="pt"
+        model="whisper-1", file=data, response_format="text"
     )
 
     completion = openai.ChatCompletion.create(
@@ -24,8 +24,8 @@ def transcribeAndSummarize(req: https_fn.Request) -> https_fn.Response:
         messages=[
             {
                 "role": "system",
-                "content": """Leia a transcrição a seguir e resuma em uma lista de pontos relevantes em português, tente manter o número de pontos ao mínimo. Retorne apenas um objeto json contendo: 
-                'title' (um título bem curto de no máximo 10 palavras pro resumo) e 'summary' (o resumo). Por exemplo: {'title': 'A história do computador', 'summary': 'O computador foi criado em...'}""",
+                "content": """Leia a transcrição a seguir e resuma em uma lista de pontos relevantes, tente manter o número de pontos ao mínimo. IMPORTANTE: retorne apenas um objeto json contendo:
+                'title' (um título bem curto de no máximo 10 palavras pro resumo) e 'summary' (o resumo). Por exemplo: {'title': 'A história do computador', 'summary': 'O computador foi criado em...'}. Jamais responda de uma forma diferente de um objeto json.""",
             },
             {"role": "user", "content": transcript},
         ],
